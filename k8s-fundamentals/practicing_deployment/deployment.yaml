@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kapp
+  labels:
+    app: kapp
+spec:
+  selector:
+    matchLabels:
+      app: kapp
+  template:
+    metadata:
+      labels:
+        app: kapp
+    spec:
+      containers:
+      - name: kapp
+        image: kruart/app:v2
+        ports:
+        - containerPort: 3000
+
