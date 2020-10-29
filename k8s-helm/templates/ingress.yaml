@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "name" . }}
+spec:
+  rules:
+    - host: {{ .Release.Name }}.hello-world.dev
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ template "name" . }}
+              servicePort: 80

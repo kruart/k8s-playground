@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "name" . }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      name: {{ template "name" . }}
+  template:
+    metadata:
+      labels:
+        name: {{ template "name" . }}
+        track: canary
+    spec:
+      containers:
+        - name: app
+          image: learnk8s/hello:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+
+
+
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: {{ printf "%s-%s" .Release.Name .Chart.Name }}
+#spec:
+#  replicas: {{ .Values.replicas }}
+#  selector:
+#    matchLabels:
+#      name: {{ printf "%s-%s" .Release.Name .Chart.Name }}
+#  template:
+#    metadata:
+#      labels:
+#        name: {{ printf "%s-%s" .Release.Name .Chart.Name }}
+#    spec:
+#      containers:
+#        - name: app
+#          image: learnk8s/hello:1.0.0
+#          imagePullPolicy: IfNotPresent
+#          ports:
+#            - containerPort: 3000
