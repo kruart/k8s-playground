@@ -2,6 +2,7 @@ Shell history
 ```
  9899  helm install app .
  9900  helm delete app
+ 9909  minikube addons enable ingress
  9910  helm install app .
  9911  minikube ip
  9919  minikube service app --url

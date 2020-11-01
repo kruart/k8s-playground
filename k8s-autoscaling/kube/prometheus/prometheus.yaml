@@ -1,0 +1,18 @@
+ # to run below command, it will generate prometheus-config.yaml file
+ # kubectl create configmap --from-file=prometheus.yaml --namespace=metrics --dry-run -o yaml prometheus-config >prometheus-config.yaml
+scrape_configs:
+  - job_name: myapp
+    scrape_interval: 10s
+    # The _sd_ part stands for "service discovery". https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config
+    kubernetes_sd_configs:
+      - role: pod
+    relabel_configs:  # https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+      - source_labels: [ __meta_kubernetes_pod_label_app ]
+        regex: myapp
+        action: keep
+      - source_labels: [ __meta_kubernetes_pod_name ]
+        target_label: kubernetes_pod
+      - source_labels: [ __meta_kubernetes_namespace ]
+        target_label: kubernetes_namespace
+
+
