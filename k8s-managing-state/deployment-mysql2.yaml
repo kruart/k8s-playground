@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment-2
+  labels:
+    name: mysql-deployment-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: mysql2
+  template:
+    metadata:
+      labels:
+        name: mysql2
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0.2
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysqlvolume
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          env:
+            - name: "MYSQL_ROOT_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: root
+            - name: "MYSQL_DATABASE"
+              value: "sample"
+            - name: "MYSQL_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: username
+            - name: "MYSQL_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: password
+      volumes:
+        - name: mysqlvolume
+          persistentVolumeClaim:
+            claimName: test-pvc-2
