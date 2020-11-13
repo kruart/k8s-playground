@@ -11,4 +11,6 @@ inside the Pod in deployments. `targetPort` and `containerPort` should always ma
 Those containers cannot exist in isolation, and it makes sense to keep them together. 
 As an example, you might want to log all incoming requests to your web app. 
 Or you might want to use a proxy to filter all the request to your app. 
-You could have one container such as Nginx dedicated to filtering traffic before it reaches the app.
+You could have one container such as Nginx dedicated to filtering traffic before it reaches the app.  
+- There must be at least one shared label between `template.metadata.labels` 
+and `selector.matchLabels` fields in deployment.
